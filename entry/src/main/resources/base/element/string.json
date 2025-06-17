@@ -1,0 +1,44 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "app_name",
+      "value": "Amount Formatter"
+    },
+    {
+      "name": "amount_input_title",
+      "value": "金额输入格式化"
+    },
+    {
+      "name": "amount_label",
+      "value": "输入金额"
+    },
+    {
+      "name": "amount_placeholder",
+      "value": "请输入金额"
+    },
+    {
+      "name": "raw_value_label",
+      "value": "原始数值"
+    },
+    {
+      "name": "formatted_value_label",
+      "value": "格式化结果"
+    },
+    {
+      "name": "confirm_button",
+      "value": "确认"
+    }
+  ]
+}
