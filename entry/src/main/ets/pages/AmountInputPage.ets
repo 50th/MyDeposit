@@ -1,4 +1,3 @@
-// entry/src/main/ets/pages/AmountInputPage.ets
 import { router } from '@kit.ArkUI';
 
 @Entry
@@ -6,7 +5,7 @@ import { router } from '@kit.ArkUI';
 struct AmountInputPage {
   @State formattedAmount: string = "";  // 格式化后显示值
   private rawAmount: string = "";       // 原始输入值
-  // controller: TextInput.TextInputController = new TextInput.TextInputController(); // 修正导入方式
+  controller: TextInputController = new TextInputController();
 
   // 页面标题
   private title: Resource = $r('app.string.amount_input_title');
@@ -29,7 +28,7 @@ struct AmountInputPage {
           .alignSelf(ItemAlign.Start)
 
         // 金额输入框
-        TextInput()
+        TextInput({ controller: this.controller })
           .type(InputType.Number)         // 数字键盘
           .onChange((newVal: string) => {
             this.handleAmountChange(newVal);
@@ -51,16 +50,16 @@ struct AmountInputPage {
 
       // 格式化结果展示
       Column() {
-        // 原始数据展示
-        Text($r('app.string.raw_value_label'))
-          .fontSize(16)
-          .fontColor(Color.Gray)
-          .margin({ bottom: 8 })
-
-        Text(this.rawAmount || '0')
-          .fontSize(18)
-          .fontColor(Color.Blue)
-          .margin({ bottom: 20 })
+        // // 原始数据展示
+        // Text($r('app.string.raw_value_label'))
+        //   .fontSize(16)
+        //   .fontColor(Color.Gray)
+        //   .margin({ bottom: 8 })
+        //
+        // Text(this.rawAmount || '0')
+        //   .fontSize(18)
+        //   .fontColor(Color.Blue)
+        //   .margin({ bottom: 20 })
 
         // 格式化后数据展示
         Text($r('app.string.formatted_value_label'))
@@ -103,7 +102,7 @@ struct AmountInputPage {
     this.formattedAmount = this.formatAmount(this.rawAmount);
 
     // 3. 调整光标位置
-    // this.adjustCaretPosition();
+    this.adjustCaretPosition();
   }
 
   // 金额格式化逻辑
@@ -135,14 +134,12 @@ struct AmountInputPage {
   }
 
   // 光标位置调整
-  // private adjustCaretPosition() {
-  //   // 计算逗号数量差
-  //   const newCommaCount = (this.formattedAmount.match(/,/g) || []).length;
-  //   const oldCommaCount = (this.rawAmount.match(/,/g) || []).length;
-  //   const commaDiff = newCommaCount - oldCommaCount;
-  //
-  //   // 根据逗号增减调整光标位置
-  //   const newPosition = Math.max(0, this.controller.caretPosition + commaDiff);
-  //   this.controller.caretPosition = newPosition;
-  // }
+  private adjustCaretPosition() {
+    // 计算逗号数量差（新旧值对比）
+    const commaDiff = (this.formattedAmount.match(/,/g) || []).length - (this.rawAmount.match(/,/g) || []).length;
+
+    // 根据逗号增减调整光标位置
+    const newPosition = Math.max(0, this.controller.getCaretOffset().index + commaDiff);
+    this.controller.caretPosition(newPosition);
+  }
 }
