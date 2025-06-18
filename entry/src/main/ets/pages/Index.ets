@@ -4,14 +4,14 @@ import { BusinessError } from '@kit.BasicServicesKit';
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World';
+  @State message: string = '欢迎使用存款记录';
 
 
   build() {
     Row() {
       Column() {
         Text(this.message)
-          .fontSize(50)
+          .fontSize(36)
           .fontWeight(FontWeight.Bold)
         // 添加按钮，以响应用户点击
         Button() {
@@ -28,12 +28,11 @@ struct Index {
         .height('5%')
         // 跳转按钮绑定onClick事件，点击时跳转到第二页
         .onClick(() => {
-          console.info(`Succeeded in clicking the 'Next' button.`)
           // 获取UIContext
           let uiContext: UIContext = this.getUIContext();
           let router = uiContext.getRouter();
           // 跳转到第二页
-          router.pushUrl({ url: 'pages/AmountInputPage' }).then(() => {
+          router.pushUrl({ url: 'pages/DepositInputPage' }).then(() => {
             console.info('Succeeded in jumping to the second page.')
 
           }).catch((err: BusinessError) => {

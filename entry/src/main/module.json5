@@ -47,6 +47,16 @@
           }
         ],
       }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.READ_WRITE_USER_FILE",
+        "reason": "Database Access"
+      },
+      {
+        "name": "ohos.permission.WRITE_MEDIA"
+      }
     ]
+
   }
 }
