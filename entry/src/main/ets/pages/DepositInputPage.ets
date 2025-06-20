@@ -1,4 +1,5 @@
-import { router } from '@kit.ArkUI';
+import { BusinessError } from '@kit.BasicServicesKit';
+import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
 
 @Entry
 @Component
@@ -9,6 +10,23 @@ struct AmountInputPage {
 
   // 页面标题
   private title: Resource = $r('app.string.amount_input_title');
+
+  async putPreference(data: string) {
+    if (preferenceDeposit !== null) {
+      await preferenceDeposit.putPreference('deposit', data);
+      let uiContext: UIContext = this.getUIContext();
+      let router = uiContext.getRouter();
+      try {
+        // 返回首页
+        router.back()
+        console.info('Succeeded in returning to the index page.')
+      } catch (err) {
+        let code = (err as BusinessError).code;
+        let message = (err as BusinessError).message;
+        console.error(`Failed to return to the index page. Code is ${code}, message is ${message}`)
+      }
+    }
+  }
 
   build() {
     Column() {
@@ -83,7 +101,11 @@ struct AmountInputPage {
         .margin(30)
         .fontSize(18)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/ConfirmationPage' });
+          if (this.rawAmount) {
+            this.putPreference(this.rawAmount);
+          } else {
+            console.error('请输入存款');
+          }
         })
     }
     .width('100%')

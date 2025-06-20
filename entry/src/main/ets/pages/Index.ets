@@ -1,11 +1,17 @@
-import { BusinessError } from '@kit.BasicServicesKit';
-
 // Index.ets
+import { BusinessError } from '@kit.BasicServicesKit';
+import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
+import { hilog } from '@kit.PerformanceAnalysisKit';
+
 @Entry
 @Component
 struct Index {
-  @State message: string = '欢迎使用存款记录';
+  @State message: string = '欢迎使用';
 
+  async onPageShow() {
+    let deposit = await preferenceDeposit.getPreference('deposit');
+    hilog.info(0x0001, 'indexTag', 'deposit: %{public}s', deposit);
+  }
 
   build() {
     Row() {
@@ -34,7 +40,6 @@ struct Index {
           // 跳转到第二页
           router.pushUrl({ url: 'pages/DepositInputPage' }).then(() => {
             console.info('Succeeded in jumping to the second page.')
-
           }).catch((err: BusinessError) => {
             console.error(`Failed to jump to the second page. Code is ${err.code}, message is ${err.message}`)
           })

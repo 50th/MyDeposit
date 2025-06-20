@@ -27,8 +27,10 @@ class DBManager {
       securityLevel: relationalStore.SecurityLevel.S1
     };
     relationalStore.getRdbStore(context, config, (err, store) => {
+      console.log(JSON.stringify(err.data));
+      console.log(JSON.stringify(store));
       if (err) {
-        console.error(err.message);
+        console.error('err:', err.stack);
         console.error(`数据库初始化失败: ${err.code}, ${err.message}`);
         callback(false);
         return;
