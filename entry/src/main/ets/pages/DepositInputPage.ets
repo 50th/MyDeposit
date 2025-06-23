@@ -1,5 +1,8 @@
 import { BusinessError } from '@kit.BasicServicesKit';
 import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
+import { hilog } from '@kit.PerformanceAnalysisKit';
+
+const DEPOSIT = 0x0002;
 
 @Entry
 @Component
@@ -10,6 +13,14 @@ struct AmountInputPage {
 
   // 页面标题
   private title: Resource = $r('app.string.amount_input_title');
+
+  async onPageShow() {
+    this.rawAmount = (await preferenceDeposit.getPreference('deposit')).toString();
+    hilog.info(DEPOSIT, 'depositTag', 'rawAmount: %{public}s', this.rawAmount);
+    if (this.rawAmount) {
+      this.handleAmountChange(this.rawAmount);
+    }
+  }
 
   async putPreference(data: string) {
     if (preferenceDeposit !== null) {
