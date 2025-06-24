@@ -14,22 +14,26 @@ struct Index {
   router: Router | null = null;
 
   async onPageShow() {
+    hilog.info(INDEX, 'indexTag', 'onPageShow');
     // 获取 UIContext 和 router
     let uiContext: UIContext = this.getUIContext();
     this.router = uiContext.getRouter();
     this.deposit = (await preferenceDeposit.getPreference('deposit')).toString();
     hilog.info(INDEX, 'indexTag', 'deposit: %{public}s', this.deposit);
     if (! this.deposit) {
+      hilog.info(INDEX, 'indexTag', 'push DepositInputPage');
       this.router?.pushUrl({ url: 'pages/DepositInputPage' })
     }
   }
 
   build() {
-    Row() {
-      Column() {
+    Column() {
+      Row() {
         Text(`初始存款：${this.deposit}`)
           .fontSize(25)
           .fontWeight(FontWeight.Bold)
+      }
+      Row() {
         // 添加按钮，以响应用户点击
         Button() {
           Text('输入初始')
@@ -56,5 +60,6 @@ struct Index {
       .width('100%')
     }
     .height('100%')
+    .justifyContent(FlexAlign.Start)
   }
 }

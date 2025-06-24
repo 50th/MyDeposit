@@ -30,13 +30,13 @@ class PreferenceDeposit {
 
   async putPreference(key: string = 'deposit', value: string) {
     this.checkInitialized();
-    await this.preferenceDeposit!.put(key, value);
-    await this.preferenceDeposit!.flush();
+    this.preferenceDeposit!.putSync(key, value);
+    this.preferenceDeposit!.flushSync();
   }
 
-  async getPreference(key: string = 'deposit') {
+  async getPreference(key: string = 'deposit', defaultVal:String = '') {
     this.checkInitialized();
-    return await this.preferenceDeposit!.get(key, null);
+    return this.preferenceDeposit!.getSync(key, defaultVal);
   }
 
   // 增强资源释放
