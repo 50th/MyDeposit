@@ -17,6 +17,14 @@
       "value": "Amount Formatter"
     },
     {
+      "name": "enter_init_button",
+      "value": "输入初始存款"
+    },
+    {
+      "name": "income_and_expenses_details_latest",
+      "value": "最近收支情况"
+    },
+    {
       "name": "amount_input_title",
       "value": "金额输入格式化"
     },
