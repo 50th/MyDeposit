@@ -1,8 +1,8 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import dbManager from '../common/dbManager';
-import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
+import DBUtils from '../common/utils/DBUtils';
+import preferenceDeposit from '../common/utils/PreferenceUtils'
 
 const DOMAIN = 0x0000;
 
@@ -10,8 +10,7 @@ export default class EntryAbility extends UIAbility {
   async onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
-    preferenceDeposit.init(this.context)
-    // 初始化全局上下文
+    preferenceDeposit.init(this.context);
     // dbManager.init(this.context, (success: boolean) => {
     //   if (success) {
     //     console.info('数据库表结构初始化完成');
@@ -29,6 +28,8 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage): void {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+
+    DBUtils.createDB();
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {

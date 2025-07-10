@@ -1,10 +1,10 @@
 // Index.ets
 import { BusinessError } from '@kit.BasicServicesKit';
-import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
+import preferenceDeposit from '../common/utils/PreferenceUtils'
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { Router } from '@kit.ArkUI';
 
-const INDEX = 0x0001;
+const DOMAIN = 0x0001;
 
 @Entry
 @Component
@@ -15,14 +15,14 @@ struct Index {
   lastedDetailsList = [1, 2, 3, 4, 5];
 
   async onPageShow() {
-    hilog.info(INDEX, 'indexTag', 'onPageShow');
+    hilog.info(DOMAIN, 'indexTag', 'onPageShow');
     // 获取 UIContext 和 router
     let uiContext: UIContext = this.getUIContext();
     this.router = uiContext.getRouter();
     this.deposit = (await preferenceDeposit.getPreference('deposit')).toString();
-    hilog.info(INDEX, 'indexTag', 'deposit: %{public}s', this.deposit);
+    hilog.info(DOMAIN, 'indexTag', 'deposit: %{public}s', this.deposit);
     if (!this.deposit) {
-      hilog.info(INDEX, 'indexTag', 'push DepositInputPage');
+      hilog.info(DOMAIN, 'indexTag', 'push DepositInputPage');
       this.router?.pushUrl({ url: 'pages/DepositInputPage' })
     }
   }

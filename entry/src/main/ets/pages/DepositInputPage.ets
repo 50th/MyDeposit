@@ -1,8 +1,8 @@
 import { BusinessError } from '@kit.BasicServicesKit';
-import preferenceDeposit from '../common/preferenceUtils/preferenceDeposit'
+import preferenceDeposit from '../common/utils/PreferenceUtils'
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
-const DEPOSIT = 0x0002;
+const DOMAIN = 0x0002;
 
 @Entry
 @Component
@@ -16,7 +16,7 @@ struct AmountInputPage {
 
   async onPageShow() {
     this.rawAmount = (await preferenceDeposit.getPreference('deposit')).toString();
-    hilog.info(DEPOSIT, 'depositTag', 'rawAmount: %{public}s', this.rawAmount);
+    hilog.info(DOMAIN, 'depositTag', 'rawAmount: %{public}s', this.rawAmount);
     if (this.rawAmount) {
       this.handleAmountChange(this.rawAmount);
     }
